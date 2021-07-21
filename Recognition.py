@@ -13,7 +13,6 @@ faceCascade = cv2.CascadeClassifier(cascadePath);
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-#initiate id counter
 id = 0
 
 names = ['None', 'Person 1', 'Person 2']
@@ -28,12 +27,10 @@ minH = 0.05*cam.get(4)
 
 flag_person = 0
 
-
 while True:
 
     now = datetime.datetime.now()
     t = now.hour
-    #  briefing
     if (t>6 and t<12):
         ret, img =cam.read()
         
@@ -48,14 +45,13 @@ while True:
         for(x,y,w,h) in faces:
 
             id, confidence = recognizer.predict(gray[y:y+h,x:x+w])
-
             if (confidence < confidence_threshold):
                 id = names[id]
                 print(id,' spotted at ',now.hour,':',now.minute,'on',now.month,'/',now.day)
                 confidence = "  {0}%".format(round(100 - confidence))
                 if (id == 'Person1' and flag_person_ == 0):
                     os.system('message')
-                    #time.sleep(5)
+                    time.sleep(5)
                     os.system('message')
                     time.sleep(10)
                     os.system('mycroft-speak have a great day ahead')
